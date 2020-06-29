@@ -1,0 +1,14 @@
+.selected {
+  border: 2px solid black;
+}
+
+.tagItem {
+  margin: 6px 9px;
+  list-style: none;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
