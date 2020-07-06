@@ -7,11 +7,11 @@ const UsuariosProvider = ({ children }) => {
   const [usuarios, setUsuarios] = useState(datosUsuarios);
   const [vista, setVista] = useState(true);
 
-  const handleClick = () => setVista(!vista);
+  const setVistaClick = () => setVista(!vista);
 
   return (
     <UsuariosContext.Provider
-      value={{ usuarios, setUsuarios, vista, handleClick }}
+      value={{ usuarios, setUsuarios, vista, setVistaClick }}
     >
       {children}
     </UsuariosContext.Provider>

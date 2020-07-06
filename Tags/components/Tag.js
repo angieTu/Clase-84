@@ -3,14 +3,9 @@ import TagsContext from "../contexts/TagsContext";
 import style from "./tags.module.scss";
 
 const Tag = ({ id, children, status }) => {
-  const { handleTagSelectedClick, handleTagSelectedChange } = useContext(
-    TagsContext
-  );
+  const { onClickTag } = useContext(TagsContext);
 
-  const handleClick = () => {
-    handleTagSelectedClick(id);
-    handleTagSelectedChange(id);
-  };
+  const handleClick = () => onClickTag(id);
 
   return (
     <li onClick={handleClick} className={`${style.tagItem} ${style[status]}`}>

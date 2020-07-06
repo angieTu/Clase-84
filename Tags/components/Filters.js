@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import TagsContext from "../contexts/TagsContext";
+import SidebarContext from "../contexts/SidebarContext";
 
-const Filter = ({ children }) => {
-  const { visible } = useContext(TagsContext);
+const Filters = ({ children }) => {
+  const { visible, setVisibleClick } = useContext(SidebarContext);
+
   return (
     <>
-      {!visible ? <button>SIDEBAR</button> : <button>X</button>}
-
+      <button onClick={setVisibleClick}>{visible ? "X" : "SIDEBAR"}</button>
       {children}
     </>
   );
 };
 
-export default Filter;
+export default Filters;

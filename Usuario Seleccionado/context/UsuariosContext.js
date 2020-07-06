@@ -7,7 +7,7 @@ const UsuariosProvider = ({ children }) => {
   const [usuarios, setUsuarios] = useState(datosUsuarios);
   const [usuario, setUsuario] = useState({});
 
-  const handleUsuarioSelected = (id) => {
+  const setUsuarioSelected = (id) => {
     const usuarioSelected = usuarios.find((usuario) => usuario._id === id);
     setUsuario(usuarioSelected);
   };
@@ -19,7 +19,7 @@ const UsuariosProvider = ({ children }) => {
         setUsuarios,
         usuario,
         setUsuario,
-        handleUsuarioSelected,
+        setUsuarioSelected,
       }}
     >
       {children}

@@ -3,37 +3,29 @@ import tagsArray from "../tagsArray";
 
 const TagsContext = createContext();
 
-const TagsProvider = ({ children }) => {
-  const newTags = tagsArray.map((tagArray) => ({
-    title: tagArray,
-    status: "unselected",
-  }));
+const newTags = tagsArray.sort().map((tagArray) => ({
+  title: tagArray,
+  status: "unselected",
+}));
 
+const TagsProvider = ({ children }) => {
   const [tags, setTags] = useState(newTags);
   const [tagsSelected, setTagsSelected] = useState([]);
-  const [visible, setVisible] = useState(false);
 
-  const handleTagSelectedClick = (id) => {
+  const setTagsSelectedClick = (id) => {
     const selectedTag = tags.find((tag) => tags.indexOf(tag) === id).title;
-
-    setTagsSelected([...tagsSelected, selectedTag]);
-
-    // for (let i = 0; i < tagsSelected.length; i++) {
-    //   if (selectedTag === tagsSelected[i]) {
-    //     const updateTags = [];
-    //     updateTags.push(tagsSelected[i] !== selectedTag);
-    // const updateTags = tagsSelected.filter(
-    //   (tagSelected) => tagSelected !== selectedTag
-    // );
-    // setTagsSelected([...updateTags]);
-    // }
-    // else if (selectedTag !== tagsSelected[i]) {
-    //   setTagsSelected([...tagsSelected, selectedTag]);
-    // }
-    // }
+    const existe = tagsSelected.includes(selectedTag);
+    if (!existe) {
+      setTagsSelected([...tagsSelected, selectedTag]);
+    } else {
+      const newArray = tagsSelected.filter(
+        (tagSelected) => tagSelected !== selectedTag
+      );
+      setTagsSelected([...newArray]);
+    }
   };
 
-  const handleTagSelectedChange = (id) => {
+  const setTagSelectedChange = (id) => {
     const tagSelected = tags.find((tag) => tags.indexOf(tag) === id);
     const newStatus =
       tagSelected.status === "unselected" ? "selected" : "unselected";
@@ -44,10 +36,17 @@ const TagsProvider = ({ children }) => {
     setTags([...newTags]);
   };
 
-  const handleDeleteClick = () => {
-    for (let i = 0; i < tags.length; i++) {
-      tags[i].status = "unselected";
-    }
+  const onClickTag = (id) => {
+    setTagsSelectedClick(id);
+    setTagSelectedChange(id);
+  };
+
+  const deleteClick = () => {
+    const newTags = tags.map((tag) => ({
+      title: tag.title,
+      status: "unselected",
+    }));
+    setTags([...newTags]);
     setTagsSelected([]);
   };
 
@@ -55,11 +54,9 @@ const TagsProvider = ({ children }) => {
     <TagsContext.Provider
       value={{
         tags,
-        handleTagSelectedClick,
         tagsSelected,
-        handleTagSelectedChange,
-        handleDeleteClick,
-        visible,
+        onClickTag,
+        deleteClick,
       }}
     >
       {children}
